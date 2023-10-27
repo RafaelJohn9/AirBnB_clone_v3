@@ -3,7 +3,7 @@
 """ this is my REST api creation """
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, make_response
 from models import storage
 from os import environ
 
@@ -15,6 +15,11 @@ app.register_blueprint(app_views)
 def teardown(exception):
     """ teardown method for closing an instance """
     storage.close()
+
+@app.errorhandler(404)
+def not_found(error):
+    """ json 404 page """
+    return make_response({"error": "Not found"}, 404)
 
 
 if __name__ == "__main__":
