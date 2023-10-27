@@ -1,22 +1,27 @@
 #!/usr/bin/python3
+
 """
-starts a Flask web application
+a script that starts a flask web application
 """
 
 from flask import Flask
+
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 
 
-@app.route('/', strict_slashes=False)
-def index():
-    """returns Hello HBNB!"""
-    return 'Hello HBNB!'
+@app.route("/")
+def home():
+    """ this is the homepage """
+    return "Hello HBNB!"
 
 
-@app.route('/hbnb', strict_slashes=False)
+@app.route("/hbnb")
 def hbnb():
-    """returns HBNB"""
-    return 'HBNB'
+    """ this is the hbnb page """
+    return "HBNB"
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+
+if __name__ == "__main__":
+    """ this is the unimportable script """
+    app.run(host="0.0.0.0", port="5000")

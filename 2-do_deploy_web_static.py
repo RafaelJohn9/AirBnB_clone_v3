@@ -1,30 +1,47 @@
 #!/usr/bin/python3
+
 """
-Fabric script based on the file 1-pack_web_static.py that distributes an
-archive to the web servers
+a fabric script (based on 1-pack_web_static.py)
+that distributes an archive to your web servers
+using the function do_deploy
 """
+from fabric.api import *
+from os import path
+import sys
 
-from fabric.api import put, run, env
-from os.path import exists
-env.hosts = ['142.44.167.228', '144.217.246.195']
+# sets the list of web server ip addresses
+env.hosts = ['100.25.109.79', '18.206.207.45']
 
 
+@task
 def do_deploy(archive_path):
-    """distributes an archive to the web servers"""
-    if exists(archive_path) is False:
-        return False
+    """
+    a fabric script that distributes an archive to your web servers
+    """
     try:
-        file_n = archive_path.split("/")[-1]
-        no_ext = file_n.split(".")[0]
-        path = "/data/web_static/releases/"
-        put(archive_path, '/tmp/')
-        run('mkdir -p {}{}/'.format(path, no_ext))
-        run('tar -xzf /tmp/{} -C {}{}/'.format(file_n, path, no_ext))
-        run('rm /tmp/{}'.format(file_n))
-        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
-        run('rm -rf {}{}/web_static'.format(path, no_ext))
-        run('rm -rf /data/web_static/current')
-        run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
+        if not path.exists(archive_path):
+            return False
+        remote_dest = "/tmp"
+
+        # breaking down archive_path name
+        dirBreak = archive_path.split("/")
+
+        # dirBreak[-1] contains name of the file
+        extBreak = dirBreak[-1].split(".")
+        name = extBreak[0]
+
+        cmd1 = f"sudo tar -xzf {remote_dest}/{dirBreak[-1]}\
+                -C /data/web_static/releases/{name} --strip-components 1"
+
+        put(local_path=archive_path, remote_path=remote_dest)
+        run(f'mkdir -p /data/web_static/releases/{name}')
+        run(cmd1)
+        run(f'rm -rf {remote_dest}/{dirBreak[-1]}')
+
+        # symbolic link
+        run("sudo rm -rf /data/web_static/current")
+        run(f'ln -fs /data/web_static/releases/{name}\
+                /data/web_static/current')
         return True
-    except:
-        return False
+    except Exception:
+        return False 
