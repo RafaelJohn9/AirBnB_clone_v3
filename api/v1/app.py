@@ -19,7 +19,7 @@ def teardown(error):
 
 @app.errorhandler(404)
 def not_found(error):
-    """ json 404 page """
+    """ json 404 page for the 404 error code """
     return make_response({"error": "Not found"}, 404)
 
 

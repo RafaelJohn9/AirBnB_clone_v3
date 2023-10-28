@@ -70,7 +70,7 @@ class FileStorage:
     def get(self, cls, id):
         """ a method that retrieves one object """
         cls_dict = self.all(cls)
-        key = f"{cls.__name__}.{id}"
+        key = f"{}.{}".format(cls.__name__, id)
         if cls_dict.get(key):
             return cls_dict[key]
         else:
