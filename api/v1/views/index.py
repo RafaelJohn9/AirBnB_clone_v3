@@ -35,4 +35,4 @@ def route_stats():
         count = storage.count(facilities[facility])
         returnDict[facility] = count
 
-    return (returnDict)
+    return jsonify(returnDict)
