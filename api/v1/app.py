@@ -13,9 +13,9 @@ app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
 
 @app.teardown_appcontext
-def teardown(exception):
+def teardown(error):
     """ teardown method for closing an instance """
-    storage.close()
+    return storage.close()
 
 @app.errorhandler(404)
 def not_found(error):
