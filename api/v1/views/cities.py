@@ -92,7 +92,7 @@ def route_all_cities(state_id=None):
         try:
             newcity = request.get_json()
         except Exception:
-            abort(400, description="Not a JSON")
+            return "Not a JSON", 400
 
         if newcity.get('name') is None:
             abort(400, description="Missing name")
