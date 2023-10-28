@@ -49,13 +49,12 @@ class FileStorage:
                     'Review': Review
                   }
         try:
-            temp = {}
-            with open(FileStorage.__file_path, 'r') as f:
-                temp = json.load(f)
-                for key, val in temp.items():
-                    self.all()[key] = classes[val['__class__']](**val)
-        except FileNotFoundError:
-            pass
+            with open(self.__file_path, 'r') as f:
+                jo = json.load(f)
+            for key in jo:
+                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
+        except Exception as e:
+            print (e)
 
     def delete(self, obj=None):
         """Deletes an object from storage"""
@@ -67,3 +66,17 @@ class FileStorage:
     def close(self):
         """ deserializes json files """
         self.reload()
+
+    def get(self, cls, id):
+        """ a method that retrieves one object """
+        cls_dict = self.all(cls)
+        key = f"{cls.__name__}.{id}"
+        if cls_dict.get(key):
+            return cls_dict[key]
+        else:
+            return None
+
+    def count(self, cls=None):
+        """ a method to count the number of objects in storage """
+        cls_dict = self.all(cls)
+        return len(cls_dict)
