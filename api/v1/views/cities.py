@@ -81,9 +81,9 @@ def route_all_cities(state_id=None):
             stateCities = states[key].cities
             for stateCity in stateCities:
                 cities.append(stateCity.to_dict())
-                return jsonify(cities), 200
-            else:
-                abort(404)
+            return jsonify(cities), 200
+        else:
+            abort(404)
     elif request.method == 'POST':
         # creating a new instance
         if not states.get(key):
