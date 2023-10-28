@@ -11,16 +11,17 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from models.place import Place
+from models import storage
 
 
 @app_views.route("status", strict_slashes=False)
-def route_status():
+def status():
     """ this the route for the status code """
     return jsonify({"status": "OK"})
 
 
-@app_views.route("stats", strict_slashes=False)
-def route_stats():
+@app_views.route("stats")
+def stats():
     """ an endpoint that retrieves the num of each object type """
     from models import storage
     facilities = {'amenities': Amenity,
