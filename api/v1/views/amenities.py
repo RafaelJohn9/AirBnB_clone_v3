@@ -9,7 +9,7 @@ from models.amenity import Amenity
 from models import storage
 
 
-methods = ['GET', 'POST', 'PUT', 'DELETE']
+methods = ['GET', 'PUT', 'DELETE', 'POST']
 
 
 @app_views.route('/amenities', methods=methods)
@@ -36,11 +36,11 @@ def route_amenities():
             newAmenity = Amenity(**newAmenity)
             newAmenity.save()
             storage.reload()
-            return jsonify(newAmenity.to_dict()), 201
+        return jsonify(newAmenity.to_dict()), 201
 
 
-@app_views.route('/amenities/', methods=methods)
-@app_views.route('/amenities/<amenity_id>', methods=methods)
+@app_views.route('/amenities/', methods=methods[:3])
+@app_views.route('/amenities/<amenity_id>', methods=methods[:3])
 def route_amenities_id(amenity_id=None):
     """ routes for all amenities """
     amenities = storage.all(Amenity)
@@ -68,6 +68,7 @@ def route_amenities_id(amenity_id=None):
             data = request.get_json()
         except Exception:
             abort(400, description="Not a JSON")
+
         # checking for exceptions of updates
         if data.get('id'):
             del(data['id'])
@@ -76,6 +77,7 @@ def route_amenities_id(amenity_id=None):
         if data.get('updated_at'):
             del(data['updated_at'])
         # end for exceptions of updates
+
         amenity = amenities.get(key)
         for key, value in data.items():
             setattr(amenity, key, value)
