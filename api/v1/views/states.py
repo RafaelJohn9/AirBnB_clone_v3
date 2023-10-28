@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 
-""" creates a new view for state objects 
+""" creates a new view for state objects
 handles all default RESTFul api actions
 """
 from flask import abort, request, jsonify
 from api.v1.views import app_views
 from models.state import State
 from models import storage
+
 
 @app_views.route('/states')
 def route_states():
@@ -20,8 +21,12 @@ def route_states():
 
     return jsonify(stateList)
 
-@app_views.route('/states/', methods=['GET', 'POST', 'PUT', 'DELETE'])
-@app_views.route('/states/<state_id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
+
+methods = ['GET', 'POST', 'PUT', 'DELETE']
+
+
+@app_views.route('/states/', methods=methods)
+@app_views.route('/states/<state_id>', methods=methods)
 def route_states_id(state_id=None):
     """ routes for all states """
     states = storage.all(State)
@@ -29,7 +34,7 @@ def route_states_id(state_id=None):
     if state_id:
         key = f"State.{state_id}"
 
-    if request.method  == 'GET':
+    if request.method == 'GET':
         if states.get(key):
             state = states[key].to_dict()
             return jsonify(state), 200
@@ -42,7 +47,7 @@ def route_states_id(state_id=None):
         except Exception:
             abort(400, "Invaid JSON")
 
-        if newState.get('name') == None:
+        if newState.get('name') is None:
             abort(400, "Missing name")
         else:
             newState = State(**newState)

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-""" creates a new view for state objects 
+""" creates a new view for state objects
 handles all default RESTFul api actions
 """
 from flask import abort, request, jsonify
@@ -8,6 +8,7 @@ from api.v1.views import app_views
 from models.state import State
 from models.city import City
 from models import storage
+
 
 @app_views.route('/cities')
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
@@ -34,7 +35,7 @@ def route_cities(city_id=None):
         except Exception:
             abort(400, "Invaid JSON")
 
-        if newcity.get('name') == None:
+        if newcity.get('name') is None:
             abort(400, "Missing name")
         else:
             newcity = City(**newcity)
@@ -67,6 +68,7 @@ def route_cities(city_id=None):
         storage.reload()
         return jsonify(city.to_dict()), 200
 
+
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
 def route_all_cities(state_id=None):
     """ routes for all cities in a state"""
@@ -92,7 +94,7 @@ def route_all_cities(state_id=None):
         except Exception:
             abort(400, "Invaid JSON")
 
-        if newcity.get('name') == None:
+        if newcity.get('name') is None:
             abort(400, "Missing name")
         else:
             newcity = City(**newcity)

@@ -24,12 +24,12 @@ def route_stats():
     """ an endpoint that retrieves the num of each object type """
     from models import storage
     facilities = {'amenities': Amenity,
-                 'cities': City,
-                 'places': Place,
-                 'reviews': Review,
-                 'states': State,
-                 'users': User
-                 }
+                  'cities': City,
+                  'places': Place,
+                  'reviews': Review,
+                  'states': State,
+                  'users': User
+                  }
     returnDict = {}
     for facility in facilities:
         count = storage.count(facilities[facility])
