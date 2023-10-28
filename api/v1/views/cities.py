@@ -33,7 +33,7 @@ def route_cities(city_id=None):
         try:
             newcity = request.get_json()
         except Exception:
-            abort(400, "Invaid JSON")
+            abort(400, "Not a JSON")
 
         if newcity.get('name') is None:
             abort(400, "Missing name")

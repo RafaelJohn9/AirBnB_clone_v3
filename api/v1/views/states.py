@@ -45,7 +45,7 @@ def route_states_id(state_id=None):
         try:
             newState = request.get_json()
         except Exception:
-            abort(400, "Invaid JSON")
+            abort(400, "Not a JSON")
 
         if newState.get('name') is None:
             abort(400, "Missing name")

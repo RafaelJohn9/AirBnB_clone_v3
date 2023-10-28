@@ -9,20 +9,34 @@ from models.amenity import Amenity
 from models import storage
 
 
-@app_views.route('/amenities')
+methods = ['GET', 'POST', 'PUT', 'DELETE']
+
+
+@app_views.route('/amenities', methods=methods)
 def route_amenities():
     """ displays all amenities in the database """
     amenities = storage.all(Amenity)
     amenityList = []
 
-    for amenityId in amenities:
-        obj = amenities[amenityId].to_dict()
-        amenityList.append(obj)
+    if request.method == 'GET':
+        for amenityId in amenities:
+            obj = amenities[amenityId].to_dict()
+            amenityList.append(obj)
+        return jsonify(amenityList)
+    elif request.method == 'POST':
+        # creating a new instance
+        try:
+            newAmenity = request.get_json()
+        except Exception:
+            abort(400, "Not a JSON")
 
-    return jsonify(amenityList)
-
-
-methods = ['GET', 'POST', 'PUT', 'DELETE']
+        if newAmenity.get('name') is None:
+            abort(400, "Missing name")
+        else:
+            newAmenity = Amenity(**newAmenity)
+            newAmenity.save()
+            storage.reload()
+            return jsonify(newAmenity.to_dict()), 201
 
 
 @app_views.route('/amenities/', methods=methods)
@@ -40,20 +54,6 @@ def route_amenities_id(amenity_id=None):
             return jsonify(amenity), 200
         else:
             abort(404)
-    elif request.method == 'POST':
-        # creating a new instance
-        try:
-            newAmenity = request.get_json()
-        except Exception:
-            abort(400, "Invaid JSON")
-
-        if newAmenity.get('name') is None:
-            abort(400, "Missing name")
-        else:
-            newAmenity = Amenity(**newAmenity)
-            newAmenity.save()
-            storage.reload()
-            return jsonify(newAmenity.to_dict()), 201
     elif request.method == 'DELETE':
         if not amenities.get(key):
             abort(404)
