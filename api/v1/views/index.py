@@ -14,13 +14,13 @@ from models.place import Place
 from models import storage
 
 
-@app_views.route("status", strict_slashes=False)
+@app_views.route("/status", strict_slashes=False)
 def status():
     """ this the route for the status code """
     return jsonify({"status": "OK"})
 
 
-@app_views.route("stats")
+@app_views.route("/stats")
 def stats():
     """ an endpoint that retrieves the num of each object type """
     from models import storage
