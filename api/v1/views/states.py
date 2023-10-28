@@ -23,6 +23,7 @@ def route_states():
 @app_views.route('/states/', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @app_views.route('/states/<state_id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def route_states_id(state_id=None):
+    """ routes for all states """
     states = storage.all(State)
 
     if state_id:

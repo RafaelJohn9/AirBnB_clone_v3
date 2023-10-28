@@ -69,6 +69,7 @@ def route_cities(city_id=None):
 
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
 def route_all_cities(state_id=None):
+    """ routes for all cities in a state"""
     states = storage.all(State)
     key = f"State.{state_id}"
 
