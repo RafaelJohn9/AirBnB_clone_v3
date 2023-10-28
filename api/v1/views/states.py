@@ -45,10 +45,10 @@ def route_states_id(state_id=None):
         try:
             newState = request.get_json()
         except Exception:
-            abort(400, "Not a JSON")
+            abort(400, description="Not a JSON")
 
         if newState.get('name') is None:
-            abort(400, "Missing name")
+            abort(400, description="Missing name")
         else:
             newState = State(**newState)
             newState.save()
@@ -67,7 +67,7 @@ def route_states_id(state_id=None):
         try:
             data = request.get_json()
         except Exception:
-            abort(400, "Not a JSON")
+            abort(400, description="Not a JSON")
         # checking for exceptions of updates
         if data.get('id'):
             del(data['id'])

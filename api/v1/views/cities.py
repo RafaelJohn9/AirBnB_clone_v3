@@ -33,10 +33,10 @@ def route_cities(city_id=None):
         try:
             newcity = request.get_json()
         except Exception:
-            abort(400, "Not a JSON")
+            abort(400, description="Not a JSON")
 
         if newcity.get('name') is None:
-            abort(400, "Missing name")
+            abort(400, description="Missing name")
         else:
             newcity = City(**newcity)
             newcity.save()
@@ -51,7 +51,7 @@ def route_cities(city_id=None):
         try:
             data = request.get_json()
         except Exception:
-            abort(400, "Not a JSON")
+            abort(400, description="Not a JSON")
 
         # checking for exceptions of updates
         if data.get('id'):
@@ -92,10 +92,10 @@ def route_all_cities(state_id=None):
         try:
             newcity = request.get_json()
         except Exception:
-            abort(400, "Invaid JSON")
+            abort(400, description="Not a JSON")
 
         if newcity.get('name') is None:
-            abort(400, "Missing name")
+            abort(400, description="Missing name")
         else:
             newcity = City(**newcity)
             setattr(newcity, 'state_id', state_id)

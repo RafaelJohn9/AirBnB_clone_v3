@@ -26,12 +26,12 @@ def route_users():
         try:
             newUser = request.get_json()
         except Exception:
-            abort(400, "Not a JSON")
+            abort(400, description="Not a JSON")
 
         if newUser.get('email') is None:
-            abort(400, "Missing email")
+            abort(400, description="Missing email")
         elif newUser.get('password') is None:
-            abort(400, "Missing password")
+            abort(400, description="Missing password")
         else:
             newUser = User(**newUser)
             newUser.save()
@@ -68,7 +68,7 @@ def route_users_id(user_id=None):
         try:
             data = request.get_json()
         except Exception:
-            abort(400, "Not a JSON")
+            abort(400, description="Not a JSON")
         # checking for exceptions of updates
         if data.get('id'):
             del(data['id'])

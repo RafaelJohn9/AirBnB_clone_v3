@@ -28,10 +28,10 @@ def route_amenities():
         try:
             newAmenity = request.get_json()
         except Exception:
-            abort(400, "Not a JSON")
+            abort(400, description="Not a JSON")
 
         if newAmenity.get('name') is None:
-            abort(400, "Missing name")
+            abort(400, description="Missing name")
         else:
             newAmenity = Amenity(**newAmenity)
             newAmenity.save()
@@ -67,7 +67,7 @@ def route_amenities_id(amenity_id=None):
         try:
             data = request.get_json()
         except Exception:
-            abort(400, "Not a JSON")
+            abort(400, description="Not a JSON")
         # checking for exceptions of updates
         if data.get('id'):
             del(data['id'])
