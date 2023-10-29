@@ -14,7 +14,7 @@ from models.place import Place
 from models import storage
 
 
-@app_views.route("/status", strict_slashes=False)
+@app_views.route("/status")
 def status():
     """ this the route for the status code """
     return jsonify({"status": "OK"}), 200
