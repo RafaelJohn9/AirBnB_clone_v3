@@ -10,10 +10,10 @@ from flask import abort, jsonify, request
                  strict_slashes=False)
 def get_amenities():
     """Retrieves the list of all """
-    amenities = storage.all(Amenity).values()
+    amenities = storage.all(Amenity)
     amenity_list = []
-    for amenity in amenities:
-        amenity_list.append(amenity.to_dict())
+    for key, value in amenities.items():
+        amenity_list.append(value.to_dict())
     return jsonify(amenity_list)
 
 
