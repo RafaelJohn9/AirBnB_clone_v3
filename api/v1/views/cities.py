@@ -73,7 +73,7 @@ def route_cities(city_id=None):
 def route_all_cities(state_id=None):
     """ routes for all cities in a state"""
     states = storage.all(State)
-    key = f"State.{state_id}"
+    key = "State.{}".format(state_id)
 
     if request.method == 'GET':
         if states.get(key):

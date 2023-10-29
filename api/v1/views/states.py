@@ -33,7 +33,7 @@ def route_states_id(state_id=None):
     states = storage.all(State)
 
     if state_id:
-        key = f"State.{state_id}"
+        key = "State.{}".format(state_id)
 
     if request.method == 'GET':
         if states.get(key):
