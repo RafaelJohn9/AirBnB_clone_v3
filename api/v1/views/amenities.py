@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""amenities.py"""
+"""amenities.py api code base"""
 from models import storage
 from models.amenity import Amenity
 from api.v1.views import app_views
