@@ -115,7 +115,7 @@ class TestFileStorage(unittest.TestCase):
             self.assertEqual(json.loads(string), json.loads(js))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get(self): 
+    def test_get(self):
         """Test the get method of retrieving  objects in file.json"""
         storage = FileStorage()
         new_dict = {}
