@@ -10,10 +10,12 @@ from os import getenv
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def teardown(error):
     """ teardown method for closing an instance """
     return storage.close()
+
 
 @app.errorhandler(404)
 def not_found(error):
