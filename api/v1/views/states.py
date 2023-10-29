@@ -9,6 +9,7 @@ from models.state import State
 from models import storage
 
 
+@app_views.route('/states/', methods=['GET'])
 @app_views.route('/states')
 def route_states():
     """ displays all states in the database """
@@ -25,7 +26,7 @@ def route_states():
 methods = ['GET', 'POST', 'PUT', 'DELETE']
 
 
-@app_views.route('/states/', methods=methods)
+@app_views.route('/states/', methods=methods[1:])
 @app_views.route('/states/<state_id>', methods=methods)
 def route_states_id(state_id=None):
     """ routes for all states """
