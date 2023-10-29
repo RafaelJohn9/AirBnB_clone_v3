@@ -10,9 +10,7 @@ from flask import abort, jsonify, request
                  strict_slashes=False)
 def get_amenities():
     """Retrieves the list of all """
-    amenities = storage.all("Amenity").values()
-    if amenities is None:
-        abort(404)
+    amenities = storage.all(Amenity).values()
     amenity_list = []
     for amenity in amenities:
         amenity_list.append(amenity.to_dict())
